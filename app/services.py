@@ -243,7 +243,10 @@ def activate_asset(db: Session, asset_id: UUID) -> Optional[Asset]:
     asset.last_seen = datetime.now(timezone.utc)
     asset.updated_at = datetime.now(timezone.utc)
     db.commit()
-    db.refresh(asset)
+  try:
+        db.refresh(asset)
+    except Exception:
+        pass
     return asset
 
 
