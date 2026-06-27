@@ -26,8 +26,7 @@ from . import services
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Create tables
-Base.metadata.create_all(bind=engine)
+
 
 # Create FastAPI app with documentation
 app = FastAPI(
@@ -37,7 +36,9 @@ app = FastAPI(
     docs_url="/docs",
     openapi_url="/openapi.json"
 )
-
+@app.on_event("startup")
+def startup():
+    Base.metadata.create_all(bind=engine)
 
 #  EXCEPTION HANDLERS  ..> Handle Pydantic validation errors
 
