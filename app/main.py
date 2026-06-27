@@ -1,4 +1,3 @@
-
 # RESTful API for managing internet-facing assets and their relationships.
 
 
@@ -36,6 +35,7 @@ app = FastAPI(
     docs_url="/docs",
     openapi_url="/openapi.json"
 )
+
 @app.on_event("startup")
 def startup():
     Base.metadata.create_all(bind=engine)
