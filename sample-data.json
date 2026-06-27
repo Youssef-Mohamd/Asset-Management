@@ -1,0 +1,166 @@
+[
+  {
+    "type": "domain",
+    "value": "example.com",
+    "status": "active",
+    "source": "scan",
+    "tags": ["root"],
+    "metadata": {
+      "registrar": "Example Registrar",
+      "registered_date": "2020-01-15"
+    }
+  },
+  {
+    "type": "subdomain",
+    "value": "www.example.com",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod"],
+    "metadata": {
+      "ip_count": 2
+    }
+  },
+  {
+    "type": "subdomain",
+    "value": "api.example.com",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod", "api"],
+    "metadata": {
+      "service": "REST API"
+    }
+  },
+  {
+    "type": "subdomain",
+    "value": "admin.example.com",
+    "status": "active",
+    "source": "scan",
+    "tags": ["admin", "internal"],
+    "metadata": {}
+  },
+  {
+    "type": "ip_address",
+    "value": "203.0.113.10",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod"],
+    "metadata": {
+      "owner": "Example Company",
+      "asn": "AS12345"
+    }
+  },
+  {
+    "type": "ip_address",
+    "value": "203.0.113.11",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod"],
+    "metadata": {
+      "owner": "Example Company",
+      "asn": "AS12345"
+    }
+  },
+  {
+    "type": "service",
+    "value": "443/tcp",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod", "https"],
+    "metadata": {
+      "service_name": "https",
+      "protocol": "TCP",
+      "port": 443
+    }
+  },
+  {
+    "type": "service",
+    "value": "80/tcp",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod", "http"],
+    "metadata": {
+      "service_name": "http",
+      "protocol": "TCP",
+      "port": 80
+    }
+  },
+  {
+    "type": "certificate",
+    "value": "CN=api.example.com",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod"],
+    "metadata": {
+      "issuer": "Let's Encrypt",
+      "issuer_cn": "R3",
+      "expires": "2025-04-15",
+      "subject": "CN=api.example.com",
+      "not_before": "2024-01-15",
+      "not_after": "2025-04-15",
+      "serial": "1234567890"
+    }
+  },
+  {
+    "type": "certificate",
+    "value": "CN=*.example.com",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod"],
+    "metadata": {
+      "issuer": "Let's Encrypt",
+      "issuer_cn": "R3",
+      "expires": "2025-06-20",
+      "subject": "CN=*.example.com",
+      "not_before": "2024-03-20",
+      "not_after": "2025-06-20",
+      "serial": "1234567891",
+      "alt_names": ["*.example.com", "example.com"]
+    }
+  },
+  {
+    "type": "technology",
+    "value": "nginx/1.24.0",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod", "web-server"],
+    "metadata": {
+      "name": "nginx",
+      "version": "1.24.0",
+      "category": "Web Servers",
+      "cpe": "cpe:/a:nginx:nginx:1.24.0"
+    }
+  },
+  {
+    "type": "technology",
+    "value": "PostgreSQL/14.5",
+    "status": "active",
+    "source": "scan",
+    "tags": ["prod", "database"],
+    "metadata": {
+      "name": "PostgreSQL",
+      "version": "14.5",
+      "category": "Database",
+      "cpe": "cpe:/a:postgresql:postgresql:14.5"
+    }
+  },
+  {
+    "type": "subdomain",
+    "value": "staging.example.com",
+    "status": "stale",
+    "source": "scan",
+    "tags": ["staging"],
+    "metadata": {
+      "last_active": "2023-12-01"
+    }
+  },
+  {
+    "type": "subdomain",
+    "value": "old.example.com",
+    "status": "archived",
+    "source": "scan",
+    "tags": ["deprecated"],
+    "metadata": {
+      "archived_date": "2023-06-15"
+    }
+  }
+]
