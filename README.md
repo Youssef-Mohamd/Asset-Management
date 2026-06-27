@@ -452,7 +452,6 @@ Three states: `active`, `stale`, `archived`
 ### Authentication
 - **API key only** (no JWT, no user management)
 - Suitable for backend-to-backend or service-to-service auth
-- Keys are hashed with SHA256 before storage
 
 ---
 
