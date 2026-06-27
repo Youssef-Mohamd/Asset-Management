@@ -481,4 +481,4 @@ tail -f debug.log
 
 ---
 
-**Built for the Buguard Internship Program** ✨
+
