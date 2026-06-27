@@ -1,11 +1,26 @@
 from sqlalchemy import Column, String, DateTime, Boolean, ForeignKey, JSON
-from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
+from sqlalchemy.types import TypeDecorator
 from datetime import datetime, timezone
 import uuid
 import enum
 from sqlalchemy import Enum 
 from .database import Base
+
+
+class GUID(TypeDecorator):
+    impl = String
+    cache_ok = True
+
+    def process_bind_param(self, value, dialect):
+        if value is None:
+            return value
+        if isinstance(value, uuid.UUID):
+            return str(value)
+        return str(value)
+
+    def process_result_value(self, value, dialect):
+        return value
 
 
 class AssetType(str, enum.Enum):
@@ -25,7 +40,7 @@ class AssetStatus(str, enum.Enum):
 class Asset(Base):
     __tablename__ = "assets"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(GUID(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     type = Column(Enum(AssetType), nullable=False)
     value = Column(String, nullable=False)
     status = Column(Enum(AssetStatus), default=AssetStatus.active)
@@ -50,8 +65,8 @@ class Asset(Base):
 class AssetTag(Base):
     __tablename__ = "asset_tags"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    asset_id = Column(UUID(as_uuid=True), ForeignKey("assets.id"), nullable=False)
+    id = Column(GUID(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    asset_id = Column(GUID(36), ForeignKey("assets.id"), nullable=False)
     tag = Column(String, nullable=False)
 
     asset = relationship("Asset", back_populates="tags")
@@ -61,9 +76,9 @@ class AssetTag(Base):
 class Relationship(Base):
     __tablename__ = "relationships"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    from_asset_id = Column(UUID(as_uuid=True), ForeignKey("assets.id"), nullable=False)
-    to_asset_id = Column(UUID(as_uuid=True), ForeignKey("assets.id"), nullable=False)
+    id = Column(GUID(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    from_asset_id = Column(GUID(36), ForeignKey("assets.id"), nullable=False)
+    to_asset_id = Column(GUID(36), ForeignKey("assets.id"), nullable=False)
     relation_type = Column(String, nullable=False)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
@@ -75,7 +90,7 @@ class Relationship(Base):
 class ApiKey(Base):
     __tablename__ = "api_keys"
 
-    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = Column(GUID(36), primary_key=True, default=lambda: str(uuid.uuid4()))
     key_hash = Column(String, nullable=False)
     label = Column(String)
     is_active = Column(Boolean, default=True)
