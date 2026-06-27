@@ -421,18 +421,7 @@ Sets up:
 - **PostgreSQL 15** on `5432` (internal: postgres:5432)
 - **FastAPI** on `8000` (maps to localhost)
 - Automatic health checks
-- Volume persistence for database
 
-### Production Checklist
-
-- [ ] Change `API_KEY` in `.env` to a strong random value
-- [ ] Set `DEBUG=false` in `.env`
-- [ ] Use strong PostgreSQL password
-- [ ] Set up proper logging/monitoring
-- [ ] Configure HTTPS/TLS (e.g., with nginx reverse proxy)
-- [ ] Set resource limits in docker-compose
-- [ ] Regular database backups
-- [ ] Use `.env` file (never commit secrets)
 
 ---
 
@@ -467,57 +456,6 @@ Three states: `active`, `stale`, `archived`
 
 ---
 
-## 🐛 Known Limitations & Future Work
-
-### Current Scope
-- No multi-tenant isolation (all users share same database)
-- No advanced RBAC (API key = full access)
-- No query audit logging
-- In-memory relationships (no graph queries like Neo4j)
-
-### Potential Enhancements
-1. **Multi-tenancy** — org_id scoping, isolation
-2. **RBAC** — role-based access control per user
-3. **Advanced filtering** — complex filters, saved searches
-4. **GraphQL API** — alternative to REST
-5. **Real-time streaming** — WebSocket updates
-6. **Asset scoring** — risk/severity assessment
-7. **Certificate expiry tracking** — automated alerts
-8. **Integration** — scanner plugins, webhook notifications
-
----
-
-## 📝 Development
-
-### Adding a New Endpoint
-
-1. **Schema** (app/schemas.py) — Define Pydantic model
-2. **Service** (app/services.py) — Implement business logic
-3. **Route** (app/main.py) — Add FastAPI endpoint
-4. **Tests** (tests/test_main.py) — Write tests
-
-Example:
-
-```python
-# 1. Schema
-class MyAssetResponse(BaseModel):
-    id: UUID
-    name: str
-
-# 2. Service
-def get_my_data(db: Session) -> list[Asset]:
-    return db.query(Asset).filter(...).all()
-
-# 3. Route
-@app.get("/my-endpoint", response_model=list[MyAssetResponse])
-def my_endpoint(db: Session = Depends(get_db)):
-    return get_my_data(db)
-
-# 4. Test
-def test_my_endpoint(client):
-    response = client.get("/my-endpoint")
-    assert response.status_code == 200
-```
 
 ### Running Locally
 
@@ -534,17 +472,13 @@ tail -f debug.log
 
 ---
 
-## 📞 Support
+## 
 
 - **API Docs**: http://localhost:8000/docs
 - **Issues**: File issues with error messages and steps to reproduce
 - **Tests**: Run `pytest tests/ -v` to ensure everything works
 
----
 
-## 📄 License
-
-Part of DarkAtlas Attack Surface Monitoring platform — Buguard Security.
 
 ---
 
